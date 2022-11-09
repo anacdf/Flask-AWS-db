@@ -2,7 +2,8 @@ from flask import Flask, render_template, flash
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from s3 import s3_upload
-
+from dynamodb import dynamodb_scan, dynamodb_put_item
+from time import time
 
 app = Flask(__name__)
 app.config.from_object("config")
@@ -15,8 +16,14 @@ def upload_page():
     form = UploadForm()
     if form.validate_on_submit():
         output = s3_upload(form.example)
-        flash("{src} uploaded to S3 as {dst}".format(src=form.example.data.filename, dst=output))
-    return render_template("example.html", form=form)
+        item = {
+            "image_url": "https://s3.amazonaws.com/" + app.config["S3_BUCKET"] + "/" + output,
+            "name": output,
+            "date": int(time())
+        }
+        flash('{src} uploaded to S3 as {dst}'.format(src=form.example.data.filename, dst=output))
+    entries = dynamodb_scan()
+    return render_template('example.html', form=form, entries=entries)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run()
