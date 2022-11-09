@@ -11,6 +11,6 @@
 #
 # By default this script does nothing.
 
-/bin/su -c "/home/ubuntu/Flask-AWS-Example/run.sh" - ubuntu &
+/bin/su -c "/home/ubuntu/Flask-AWS-db/run.sh" - ubuntu &
 
 exit 0
