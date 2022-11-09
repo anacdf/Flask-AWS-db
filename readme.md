@@ -34,4 +34,4 @@ TF_ AnaCarolinaFerreira.pdf
 - instancia trabalho
 - abrir PR da branch para a main
 
-2. Configuração de implantação automática de código com GitHub Actions
+2. Configuração de implantação automática de código com GitHub Actions.
